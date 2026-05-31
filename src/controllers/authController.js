@@ -54,4 +54,25 @@ const getProfile = async (req, res) => {
   res.json({ data: req.user });
 };
 
-module.exports = { register, login, getProfile };
+const forgotPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    await authService.forgotPassword(email);
+    // Always respond with a generic message to avoid revealing account existence
+    res.json({ message: 'Password reset email was sent' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const resetPassword = async (req, res, next) => {
+  try {
+    const { token, password } = req.body;
+    await authService.resetPassword({ token, password });
+    res.json({ message: 'Password reset successful' });
+  } catch (error) {
+    next(error);
+  }
+};
+
+module.exports = { register, login, getProfile, forgotPassword, resetPassword };

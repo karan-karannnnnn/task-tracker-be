@@ -29,6 +29,7 @@ model User {
 
   tasks        Task[]        @relation("AssignedTasks")
   activityLogs ActivityLog[]
+  passwordResets PasswordReset[]
 
   @@map("users")
 }
@@ -61,4 +62,16 @@ model ActivityLog {
   task Task? @relation(fields: [taskId], references: [id], onDelete: SetNull)
 
   @@map("activity_logs")
+}
+
+model PasswordReset {
+  id        Int      @id @default(autoincrement())
+  userId    Int      @map("user_id")
+  token     String   @unique
+  expires   DateTime
+  createdAt DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("password_resets")
 }

@@ -10,6 +10,12 @@ router.post('/register', registerValidator, authController.register);
 // POST /api/auth/login
 router.post('/login', loginValidator, authController.login);
 
+// POST /api/auth/forgot-password
+router.post('/forgot-password', authController.forgotPassword);
+
+// POST /api/auth/reset-password
+router.post('/reset-password', authController.resetPassword);
+
 // GET /api/auth/profile  (requires authentication)
 router.get('/profile', authenticate, authController.getProfile);
 

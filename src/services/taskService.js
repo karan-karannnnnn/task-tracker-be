@@ -4,7 +4,7 @@ const prisma = require('../config/prisma');
  * Create a new task and assign it to a user.
  */
 const createTask = async ({ title, description, assigned_to, status, due_date }) => {
-  const user = await prisma.user.findUnique({ where: { id: Number(assigned_to) } });
+  const user = await prisma.user.findFirst({ where: { id: Number(assigned_to) } });
   if (!user) {
     const error = new Error('Assigned user not found');
     error.statusCode = 404;
@@ -118,7 +118,7 @@ const getTaskById = async (id) => {
  * Returns both the updated task and the previous status (for activity log diffing).
  */
 const updateTask = async (id, { title, description, status, due_date, assigned_to }) => {
-  const existingTask = await prisma.task.findUnique({ where: { id: Number(id) } });
+  const existingTask = await prisma.task.findFirst({ where: { id: Number(id) } });
   if (!existingTask) {
     const error = new Error('Task not found');
     error.statusCode = 404;
@@ -126,7 +126,7 @@ const updateTask = async (id, { title, description, status, due_date, assigned_t
   }
 
   if (assigned_to !== undefined) {
-    const user = await prisma.user.findUnique({ where: { id: Number(assigned_to) } });
+    const user = await prisma.user.findFirst({ where: { id: Number(assigned_to) } });
     if (!user) {
       const error = new Error('Assigned user not found');
       error.statusCode = 404;
