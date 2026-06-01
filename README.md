@@ -6,15 +6,36 @@ This repository contains the backend API for the Employee Task Tracker assessmen
 
 Prerequisites: Docker and Docker Compose installed.
 
+make .env file before the initializing this docker command
+
+PORT=3000
+NODE_ENV=development
+APP_NAME=employee-task-tracker
+APP_URL=http://localhost:3000
+SMTP_USER=c677abb08301d3
+SMTP_PASS=62134ac3253e24
+SMTP_HOST=sandbox.smtp.mailtrap.io
+SMTP_PORT=587
+SMTP_SECURE=false
+FROM_EMAIL=hello@demomailtrap.co
+ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173,http://localhost:3001,http://localhost:5174
+
+# Database
+DB_HOST=db
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=YourStrongPassw0rd
+DB_NAME=employee_tracker
+DATABASE_URL=mysql://root:YourStrongPassw0rd@db:3306/employee_tracker
+
+
+# JWT
+JWT_SECRET=super_secret_jwt_key_change_in_production_32c
+JWT_EXPIRES_IN=7d
+
 ```bash
 docker compose up --build
 ```
-
-In case need to run db docker locally use this password
-
-DB_PASSWORD=YourStrongPassw0rd
-
-DATABASE_URL=mysql://root:YourStrongPassw0rd@db:3306/employee_tracker
 
 The API will be available at http://localhost:3000 (see `.env` for `PORT`).
 
